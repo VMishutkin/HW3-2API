@@ -26,7 +26,7 @@ public class StudentController {
         return studentService.edit(student.getId(), student);
     }
     @DeleteMapping("{studentId}")
-    public Student removeStudent(@RequestParam Long studentId){
+    public  removeStudent(@RequestParam Long studentId){
         return studentService.remove(studentId);
     }
 

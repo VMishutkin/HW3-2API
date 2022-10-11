@@ -1,40 +1,35 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-
-import java.util.HashMap;
-import java.util.Map;
+import ru.hogwarts.school.repository.FacultyRepository;
 
 @Service
 public class FacultyService {
-    private final Map<Long, Faculty> faculties;
-    private Long id;
+    private final FacultyRepository facultyRepository;
 
 
-    public FacultyService() {
-        this.faculties = new HashMap<Long, Faculty>();
-        id=0l;
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
     }
 
     public Faculty add(Faculty newFaculty){
-        faculties.put(++id, newFaculty);
-        return newFaculty;
+
+        return facultyRepository.save(newFaculty);
     }
 
-    public Faculty remove(Long id){
-        Faculty removedFaculty = faculties.get(id);
-        faculties.remove(id);
-        return removedFaculty;
+    public void remove(Long id){
+        facultyRepository.deleteById(id);
     }
 
-    public Faculty edit(Long id, Faculty changedFaculty){
-        faculties.put(id, changedFaculty);
-        return changedFaculty;
-    }
+/*    public Faculty edit(Long id, Faculty changedFaculty){
+        return facultyRepository.save(changedFaculty);
+    }*/
 
     public Faculty find(Long id){
-        return faculties.get(id);
+
+        return facultyRepository.findById(id).get();
     }
 
 }
