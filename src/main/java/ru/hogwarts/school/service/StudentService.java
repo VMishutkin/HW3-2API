@@ -25,11 +25,10 @@ public class StudentService {
         studentsRepository.deleteById(id);
     }
 
-    /*  public Student edit(Long id, Student changedStudent) {
-          studentsRepository.put(id, changedStudent);
-        return changedStudent;
+      public Student edit(Student changedStudent) {
+          return add(changedStudent);
     }
-*/
+
     public Student find(Long id) {
     return studentsRepository.findById(id).get();
     }

@@ -18,18 +18,20 @@ public class FacultyController {
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.add(faculty);
     }
+
     @GetMapping("{facultyId}")
-    public ResponseEntity<Faculty> findFaculty(@RequestParam Long facultyId)
-    {
+    public ResponseEntity<Faculty> findFaculty(@RequestParam Long facultyId) {
 
         return ResponseEntity.ok().build();
     }
+
     @PutMapping
-    public Faculty updateFaculty(@RequestBody Faculty faculty){
+    public Faculty updateFaculty(@RequestBody Faculty faculty) {
         return facultyService.add(faculty);
     }
+
     @DeleteMapping("{facultyId}")
-    public Faculty removeFaculty(@RequestParam Long facultyId){
+    public Faculty removeFaculty(@RequestParam Long facultyId) {
         return facultyService.remove(facultyId);
     }
 }
