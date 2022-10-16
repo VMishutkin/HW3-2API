@@ -27,7 +27,7 @@ public class FacultyController {
 
         return facultyService.add(faculty);
     }
-    @GetMapping("getStudents/{facultyId}")
+    @GetMapping("/{facultyId}/students")
     public Collection<Student> getStudents(@PathVariable Long facultyId){
         return facultyService.getStudents(facultyId);
     }

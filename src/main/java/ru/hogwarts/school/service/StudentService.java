@@ -33,7 +33,7 @@ public class StudentService {
     }
 
     public Student find(Long id) {
-        return studentsRepository.findById(id).get();
+        return studentsRepository.findById(id).orElseThrow();
     }
 
     public Collection<Student> findByAge(int age) {
@@ -45,6 +45,8 @@ public class StudentService {
     }
 
     public Faculty getFaculty(Long id){
-        return studentsRepository.findById(id).orElseThrow().getFaculty();
+        Student student = studentsRepository.findById(id).orElseThrow();
+        System.out.println(student);
+        return student.getFaculty();
     }
 }
