@@ -2,9 +2,11 @@ package ru.hogwarts.school.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,12 +28,23 @@ public class StudentService {
         studentsRepository.deleteById(id);
     }
 
-      public Student edit(Student changedStudent) {
-          return add(changedStudent);
+    public Student edit(Student changedStudent) {
+        return add(changedStudent);
     }
 
     public Student find(Long id) {
-    return studentsRepository.findById(id).get();
+        return studentsRepository.findById(id).get();
     }
 
+    public Collection<Student> findByAge(int age) {
+        return studentsRepository.findStudentsByAge(age);
+    }
+
+    public Collection<Student> findByAgeInRange(int min, int max) {
+        return studentsRepository.findByAgeBetween(min, max);
+    }
+
+    public Faculty getFaculty(Long id){
+        return studentsRepository.findById(id).orElseThrow().getFaculty();
+    }
 }
