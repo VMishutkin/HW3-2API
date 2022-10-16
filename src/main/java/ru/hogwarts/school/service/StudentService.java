@@ -10,10 +10,11 @@ import java.util.Map;
 
 @Service
 public class StudentService {
-    @Autowired
+
     private final StudentRepository studentsRepository;
 
     public StudentService(StudentRepository studentRepository) {
+
         this.studentsRepository = studentRepository;
     }
 
