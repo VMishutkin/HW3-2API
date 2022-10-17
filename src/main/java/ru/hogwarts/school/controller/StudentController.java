@@ -22,12 +22,14 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student) {
         return studentService.add(student);
     }
+
     @GetMapping("{studentId}")
     public ResponseEntity<Student> findStudent(@PathVariable Long studentId){
         Student foundStudent = studentService.find(studentId);
         if(foundStudent==null){
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(foundStudent);
     }
     @PutMapping
@@ -44,6 +46,7 @@ public class StudentController {
     public Collection<Student> findStudentsByAge(@PathVariable int age){
         return studentService.findByAge(age);
     }
+
     @GetMapping("byAge")
     public Collection<Student> findStudentsByAgeInRange(@RequestParam int min, @RequestParam int max){
         return studentService.findByAgeInRange(min,max);
