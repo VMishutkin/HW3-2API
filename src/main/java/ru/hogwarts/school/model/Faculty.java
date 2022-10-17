@@ -1,11 +1,14 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 public class Faculty {
     @Id
@@ -14,10 +17,19 @@ public class Faculty {
     private String name;
     private String color;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "faculty")
+    private List<Student> students;
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
     public Faculty(Long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
+
     }
 
     public Faculty() {
@@ -53,7 +65,7 @@ public class Faculty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return id.equals(faculty.id) && name.equals(faculty.name) && color.equals(faculty.color);
+        return Objects.equals(id, faculty.id) && Objects.equals(name, faculty.name) && Objects.equals(color, faculty.color);
     }
 
     @Override
@@ -66,7 +78,6 @@ public class Faculty {
         return "Faculty{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                '}';
+                ", color='" + color + '\'';
     }
 }
