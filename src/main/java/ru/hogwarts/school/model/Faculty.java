@@ -1,5 +1,6 @@
 package ru.hogwarts.school.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ public class Faculty {
     private String name;
     private String color;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "faculty")
     private List<Student> students;
 
