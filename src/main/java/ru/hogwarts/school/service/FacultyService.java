@@ -32,7 +32,7 @@ public class FacultyService {
 
     public Faculty find(Long id){
 
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElseThrow();
     }
 
     public Collection<Faculty> findByColor(String color){
