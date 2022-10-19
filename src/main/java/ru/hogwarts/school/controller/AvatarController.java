@@ -15,6 +15,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 @RestController
@@ -32,6 +35,26 @@ public class AvatarController {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
     }
+/*    @GetMapping("/avatar")
+    public List<Avatar> getAllAvatarsWithPaging(@RequestParam("page") Integer pageNumber,
+                                                @RequestParam("size") Integer pageSize){
+        List<Avatar> avatars = avatarService.getAvatarsWithPagging(pageNumber, pageSize);
+        return avatars;
+    }*/
+    @GetMapping("/avatar")
+    public List<byte[]> getAllAvatarsWithPaging(@RequestParam("page") Integer pageNumber,
+                                                @RequestParam("size") Integer pageSize){
+        List<Avatar> avatars= avatarService.getAvatarsWithPagging(pageNumber, pageSize);
+        List<byte[]> avataricons = new ArrayList<byte[]>();
+
+        for (Avatar avatar: avatars
+             ) {
+            avataricons.add(avatar.getData());
+        }
+
+        return avataricons;
+    }
+
 
     @GetMapping(value = "/{studentId}/avatar-fromdb")
     public ResponseEntity<byte[]> downdloadAvatar(@PathVariable Long studentId) {
