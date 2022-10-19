@@ -29,6 +29,7 @@ import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.FacultyService;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -78,16 +79,10 @@ public class FacultyControllerTest {
 
 
     @BeforeAll
-    public void init() throws Exception{
-
-
-
+    public void init() throws Exception {
 
 
     }
-
-
-
 
 
     @Test
@@ -96,27 +91,24 @@ public class FacultyControllerTest {
     }
 
     @Test
-    public void testFaculty() throws Exception{
-
-        student = new Student();
-        student.setName(studentName);
-        student.setId(id);
-        student.setName(studentName);
-
-        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
-        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
-        when(facultyService.getStudents(any(Long.class))).thenReturn(Optional.of(List.of(student));
+    public void testFaculty() throws Exception {
         final String name = "testFaculty";
         final String color = "green";
 
-
+        final long id = 1;
         faculty = new Faculty();
 
-        faculty.setName("testFaculty");
-        faculty.setId(1L);
-        faculty.setColor("green");
+        faculty.setName(name);
+        faculty.setId(id);
+        faculty.setColor(color);
+        final String studentName = "student";
+        final int age = 15;
+        student = new Student();
+        student.setName(studentName);
+        student.setId(id);
+        student.setAge(age);
+        student.setFaculty(faculty);
 
-        final long id = 1;
 
         JSONObject facultyObject = new JSONObject();
         facultyObject.put("id", id);
@@ -126,8 +118,13 @@ public class FacultyControllerTest {
 
         JSONObject facultyChangedObject = new JSONObject();
         facultyObject.put("id", id);
-        facultyObject.put("name", "newName");
-        facultyObject.put("color", "newColor");
+        facultyObject.put("name", name + "1");
+        facultyObject.put("color", color + "1");
+
+
+        when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+
 
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -147,29 +144,17 @@ public class FacultyControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.color").value( color));
+                .andExpect(jsonPath("$.name").value(name ))
+                .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/faculty/" + id)
-                        .content(facultyObject.toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/getstudents/" + id)
-                        .content(facultyObject.toString())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.").value(id))
-                .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.color").value(color));
-
 
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -178,11 +163,6 @@ public class FacultyControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-
-
-
-
-
 
 
     }
