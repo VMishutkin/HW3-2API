@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,6 +33,19 @@ public class AvatarController {
         avatarService.uploadAvatar(studentId, avatar);
         return ResponseEntity.ok().build();
     }
+/*    @GetMapping("/avatar")
+    public List<Avatar> getAllAvatarsWithPaging(@RequestParam("page") Integer pageNumber,
+                                                @RequestParam("size") Integer pageSize){
+        List<Avatar> avatars = avatarService.getAvatarsWithPagging(pageNumber, pageSize);
+        return avatars;
+    }*/
+    @GetMapping("/avatar")
+    public Page<Avatar> getAllAvatarsWithPaging(@RequestParam("page") Integer pageNumber,
+                                                @RequestParam("size") Integer pageSize){
+        return avatarService.getAvatarsWithPagging(pageNumber, pageSize);
+
+    }
+
 
     @GetMapping(value = "/{studentId}/avatar-fromdb")
     public ResponseEntity<byte[]> downdloadAvatar(@PathVariable Long studentId) {
