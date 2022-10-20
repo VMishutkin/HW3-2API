@@ -10,6 +10,9 @@ public class Student {
     private String name;
     private int age;
 
+    @OneToOne
+    private Avatar avatar;
+
     @ManyToOne
     @JoinColumn(name="faculty")
     private Faculty faculty;
