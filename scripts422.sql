@@ -1,7 +1,7 @@
 CREATE TABLE user(
                      name VARCHAR(30),
                      age INTEGER CONSTRAINT age_constraint CHECK (age > 0),
-                     isLicensed BOOLEAN DEFAULT FALSE,
+                     is_licensed BOOLEAN DEFAULT FALSE,
                      car_id INTEGER REFERENCES car (car_id)
 );
 
