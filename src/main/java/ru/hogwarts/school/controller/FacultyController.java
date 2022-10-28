@@ -9,6 +9,7 @@ import ru.hogwarts.school.model.Faculty;
 import javax.websocket.server.PathParam;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RequestMapping("faculty")
 @RestController
@@ -64,5 +65,19 @@ public class FacultyController {
         facultyService.remove(facultyId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/getLongestName")
+    public String getLongestname(){
+        return facultyService.getLongestName();
+    }
+
+    @GetMapping("/fourstep")
+    public Integer fourStep(){
+        return Stream.iterate(1, a -> a +1)
+                .parallel()
+                .limit(1_000_000)
+                .reduce(0,(a,b) -> a+b);
+    }
+
 
 }

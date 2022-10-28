@@ -7,6 +7,7 @@ import ru.hogwarts.school.service.StudentService;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
+import java.util.List;
 
 @RequestMapping("student")
 @RestController
@@ -43,6 +44,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+
     @GetMapping({"byAge/{age}"})
     public Collection<Student> findStudentsByAge(@PathVariable int age) {
         return studentService.findByAge(age);
@@ -69,6 +71,16 @@ public class StudentController {
     public Faculty getFaculty(@PathVariable Long studentId) {
         return studentService.getFaculty(studentId);
     }
+
+    @GetMapping("/nameStartsWithA")
+    public List<Student> getStudentsByNameStartsWithA() {
+        return studentService.getStudentsByNameStartsWithA();
+    }
+    @GetMapping("/getAverageAge")
+    public Double getAverageAge() {
+        return studentService.getAverageAge();
+    }
+
 
 
 }
