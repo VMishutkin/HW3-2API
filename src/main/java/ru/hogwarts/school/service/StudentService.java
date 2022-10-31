@@ -57,30 +57,33 @@ public class StudentService {
 
     public Collection<Student> findByAgeInRange(int min, int max) {
 
-        logger.info("Was invoke method for search students with age from {min} to {max}", min,max);
+        logger.info("Was invoke method for search students with age from {min} to {max}", min, max);
         return studentsRepository.findByAgeBetween(min, max);
     }
 
-    public Faculty getFaculty(Long id){
+    public Faculty getFaculty(Long id) {
 
         logger.info("Was invoked method for get student");
         return studentsRepository.findById(id).orElseThrow().getFaculty();
     }
 
-    public Integer countStudents(){
+    public Integer countStudents() {
 
         logger.info("Was invoked method for count students");
         return studentsRepository.countStudents();
     }
-    public Integer countAverageAge(){
+
+    public Integer countAverageAge() {
 
         logger.info("Was invoked method for cout average age of all students");
         return studentsRepository.avgAge();
     }
-    public List<Student> getAllStudents(){
+
+    public List<Student> getAllStudents() {
         return studentsRepository.findAll();
     }
-    public Collection<Student> findLastFiveStudents(){
+
+    public Collection<Student> findLastFiveStudents() {
 
         logger.info("Was invoked method for find last five students");
         return studentsRepository.findLastFiveStudents();
@@ -96,10 +99,48 @@ public class StudentService {
 
     public Double getAverageAge() {
         return getAllStudents().stream()
-                .mapToInt(s-> s.getAge())
+                .mapToInt(s -> s.getAge())
                 .summaryStatistics()
                 .getAverage();
 
 
+    }
+
+    public void getSixStudentsParallel() {
+        List<Student> students = getAllStudents();
+        if (students.size() > 5) {
+            System.out.println(students.get(0).getName());
+            System.out.println(students.get(1).getName());
+            new Thread(() -> {
+                System.out.println(students.get(2).getName());
+                System.out.println(students.get(3).getName());
+            }).start();
+            new Thread(() -> {
+                System.out.println(students.get(4).getName());
+                System.out.println(students.get(5).getName());
+            }).start();
+        }
+
+
+    }
+
+    public synchronized void printNameSync(Student student) {
+        System.out.println(student.getName());
+    }
+
+    public void getSixStudentsSync() {
+        List<Student> students = getAllStudents();
+        if (students.size() > 5) {
+            printNameSync(students.get(0));
+            printNameSync(students.get(1));
+            new Thread(() -> {
+                printNameSync(students.get(2));
+                printNameSync(students.get(3));
+            }).start();
+            new Thread(() -> {
+                printNameSync(students.get(4));
+                printNameSync(students.get(5));
+            }).start();
+        }
     }
 }

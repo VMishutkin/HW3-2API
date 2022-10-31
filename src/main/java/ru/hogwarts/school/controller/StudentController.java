@@ -54,19 +54,22 @@ public class StudentController {
     public Collection<Student> findStudentsByAgeInRange(@RequestParam int min, @RequestParam int max) {
         return studentService.findByAgeInRange(min, max);
     }
+
     @GetMapping("/count")
-    public Integer countStudents(){
+    public Integer countStudents() {
         return studentService.countStudents();
     }
 
     @GetMapping("/avgage")
-    public Integer printAverageAge(){
+    public Integer printAverageAge() {
         return studentService.countAverageAge();
     }
+
     @GetMapping("/lastfive")
-    public Collection<Student> printLastFiveStudents(){
+    public Collection<Student> printLastFiveStudents() {
         return studentService.findLastFiveStudents();
     }
+
     @GetMapping("getfaculty/{studentId}")
     public Faculty getFaculty(@PathVariable Long studentId) {
         return studentService.getFaculty(studentId);
@@ -76,11 +79,23 @@ public class StudentController {
     public List<Student> getStudentsByNameStartsWithA() {
         return studentService.getStudentsByNameStartsWithA();
     }
+
     @GetMapping("/getAverageAge")
     public Double getAverageAge() {
         return studentService.getAverageAge();
     }
 
+    @GetMapping("/getsix/parallel")
+    public ResponseEntity getSixStudentsParallel() {
+        studentService.getSixStudentsParallel();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getsix/sync")
+    public ResponseEntity getSixStudentsSync() {
+        studentService.getSixStudentsSync();
+        return ResponseEntity.ok().build();
+    }
 
 
 }
