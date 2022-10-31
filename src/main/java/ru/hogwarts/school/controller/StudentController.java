@@ -85,17 +85,6 @@ public class StudentController {
         return studentService.getAverageAge();
     }
 
-    @GetMapping("/getsix/parallel")
-    public ResponseEntity getSixStudentsParallel() {
-        studentService.getSixStudentsParallel();
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/getsix/sync")
-    public ResponseEntity getSixStudentsSync() {
-        studentService.getSixStudentsSync();
-        return ResponseEntity.ok().build();
-    }
 
 
 }

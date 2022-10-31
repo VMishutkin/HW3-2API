@@ -106,41 +106,4 @@ public class StudentService {
 
     }
 
-    public void getSixStudentsParallel() {
-        List<Student> students = getAllStudents();
-        if (students.size() > 5) {
-            System.out.println(students.get(0).getName());
-            System.out.println(students.get(1).getName());
-            new Thread(() -> {
-                System.out.println(students.get(2).getName());
-                System.out.println(students.get(3).getName());
-            }).start();
-            new Thread(() -> {
-                System.out.println(students.get(4).getName());
-                System.out.println(students.get(5).getName());
-            }).start();
-        }
-
-
-    }
-
-    public synchronized void printNameSync(Student student) {
-        System.out.println(student.getName());
-    }
-
-    public void getSixStudentsSync() {
-        List<Student> students = getAllStudents();
-        if (students.size() > 5) {
-            printNameSync(students.get(0));
-            printNameSync(students.get(1));
-            new Thread(() -> {
-                printNameSync(students.get(2));
-                printNameSync(students.get(3));
-            }).start();
-            new Thread(() -> {
-                printNameSync(students.get(4));
-                printNameSync(students.get(5));
-            }).start();
-        }
-    }
 }
