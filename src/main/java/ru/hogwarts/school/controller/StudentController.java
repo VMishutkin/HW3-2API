@@ -6,7 +6,10 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.StudentService;
 import ru.hogwarts.school.model.Student;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 @RequestMapping("student")
@@ -96,6 +99,5 @@ public class StudentController {
         studentService.getSixStudentsSync();
         return ResponseEntity.ok().build();
     }
-
-
+    
 }

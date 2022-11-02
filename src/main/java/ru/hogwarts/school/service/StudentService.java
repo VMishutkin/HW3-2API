@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -124,22 +125,28 @@ public class StudentService {
 
     }
 
-    public synchronized void printNameSync(Student student) {
-        System.out.println(student.getName());
+    public void printNameSync(Student... students) {
+
+            Arrays.stream(students).forEach((s) -> System.out.println(s));
+
     }
 
     public void getSixStudentsSync() {
         List<Student> students = getAllStudents();
         if (students.size() > 5) {
-            printNameSync(students.get(0));
-            printNameSync(students.get(1));
+
+            synchronized (this) {
+                printNameSync(students.get(0), students.get(1));
+            }
             new Thread(() -> {
-                printNameSync(students.get(2));
-                printNameSync(students.get(3));
+                synchronized (this) {
+                    printNameSync(students.get(2), students.get(3));
+                }
             }).start();
             new Thread(() -> {
-                printNameSync(students.get(4));
-                printNameSync(students.get(5));
+                synchronized (this) {
+                    printNameSync(students.get(4), students.get(5));
+                }
             }).start();
         }
     }
